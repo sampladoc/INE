@@ -1,6 +1,7 @@
 import React from "react";
 import FormDialog from '../components/formDialog';
 
+//Preloaded Data
 export function newPerson() {
     return [{
         firstName: 'Angela',
@@ -24,6 +25,7 @@ export function newPerson() {
     }];
 };
 
+//Format for adding a new person
 export function blankPerson() {
     return {
         firstName: '',
@@ -37,9 +39,9 @@ export function blankPerson() {
     };
 };
 
-
+//Column settings for react table
 export function columns(updateFunction, deleteFunction) {
-    
+    //Callback functions to send data back to main page tu update the state
     function updateData(d,i){
         updateFunction(d,i)
     }
@@ -84,6 +86,7 @@ export function columns(updateFunction, deleteFunction) {
             Header: null,
             Cell: row => (
                 <div>
+                {/*Delete and Edit functionality passed through same component*/}
                     <FormDialog
                       key={"edit"}
                       data={row.original}

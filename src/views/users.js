@@ -15,6 +15,7 @@ class Users extends React.Component {
   }
   updateData = (updatedData, index) => {
     let data= this.state.data;
+    //Use a combination of JSON.parse and JSON.stringify to deepClone data before updating the state since react doesn't see object mutations
     const newData = JSON.parse(JSON.stringify(data));
     newData[index] = updatedData
     this.setState({data: newData})
@@ -35,6 +36,7 @@ class Users extends React.Component {
     const { data, columns } = this.state;
     return (
       <div>
+        {/*Doesn't show table before data is loaded to avoid errors*/}
         {data && (
         <Table
           data={data}

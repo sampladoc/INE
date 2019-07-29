@@ -50,7 +50,7 @@ export default function FormDialog(props) {
     function handleClickOpen() {
         let tempData = JSON.parse(JSON.stringify(props.data));
         let tempData2 = {};
-        
+        //Initialize error object with current values whenever the modal is opened
         Object.entries(tempData).forEach(([key, value]) => {
             if(value){
                 tempData2[key] = false
@@ -58,6 +58,7 @@ export default function FormDialog(props) {
         });
 
         setErrors(tempData2)
+        //Choose correct functionality (delete,edit, add) when modal opens
         if(props.type !== "delete"){
             setOpen(true);
             setData(props.data)
@@ -76,7 +77,7 @@ export default function FormDialog(props) {
         let eCount = 0
         let tempData = JSON.parse(JSON.stringify(initData));
         let tempData2 = {};
-        
+        //Validate fields
         Object.entries(tempData).forEach(([key, value]) => {
             if(value){
                 tempData2[key] = false
@@ -87,6 +88,7 @@ export default function FormDialog(props) {
         });
         setErrors(tempData2)
         if(eCount === 0){
+            //Callback function that sends the data up the component tree to be saved in the main page's state
             props.update(tempData,props.index)
             setOpen(false);
         }
@@ -94,7 +96,6 @@ export default function FormDialog(props) {
     }
 
     function handleEdit(e) {
-        const targets = e.target.name
         const target = e.target.id || e.target.name
         const value = e.target.value
         let tempData = JSON.parse(JSON.stringify(initData));
@@ -125,7 +126,7 @@ export default function FormDialog(props) {
                     <DialogContentText>
                         Cambia el texto que desee editar.
                     </DialogContentText>
-                    
+                    {/*Fields are dynamically generated*/}
                     {props.type === "edit" && open && fields.map(field => (
                         field.Header && field.accessor !== 'sex' && field.accessor !== 'state' ? (
                             <TextField
@@ -154,6 +155,7 @@ export default function FormDialog(props) {
                                         value={initData[field.accessor]}
                                         onChange={handleEdit}
                                         error={errors[field.accessor]}
+                                        required
                                     >
                                         <FormControlLabel value="F" control={<Radio />} label="F" />
                                         <FormControlLabel value="M" control={<Radio />} label="M" />
@@ -168,6 +170,7 @@ export default function FormDialog(props) {
                                         id={field.accessor}
                                         name={field.accessor}
                                         error={errors[field.accessor]}
+                                        required
                                     >
                                         {states().map(state => (
                                             <MenuItem value={state}>{state}</MenuItem>
